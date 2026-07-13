@@ -1,0 +1,12 @@
+{
+  "projectId": "huinestfood-be0f5" , 
+  "appId": "1:242262794996:web:2263878742c3af058c74a1" , 
+  "apiKey": "AIzaSyD09yHGGhd_cVP1kRYF89dxEHd7uFZxemE",
+  "authDomain": "huinestfood-be0f5.firebaseapp.com" ,
+  "firestoreDatabaseId": "(default)",
+  "storageBucket":  "huinestfood-be0f5.firebasestorage.app" , 
+  "messagingSenderId": "242262794996" ,
+  "measurementId": "",
+  "oAuthClientId": "945255780678-1cfav5cjeja8dlqmvtkdljdgvuuj1ud9.apps.googleusercontent.com"
+
+}

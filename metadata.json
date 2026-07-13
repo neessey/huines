@@ -1,0 +1,6 @@
+{
+  "name": "Huinestfood",
+  "description": "Tout le monde mérite une Pizza - Plateforme premium de commande et de gestion de pizzerias en Côte d'Ivoire.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

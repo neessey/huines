@@ -1,0 +1,25 @@
+{
+  "short_name": "HuinestFood",
+  "name": "Huinest Food - Pizzas & Livraison",
+  "description": "Commandez de délicieuses pizzas chez Huinest Food. Des recettes généreuses, des ingrédients de qualité et une préparation à la commande pour une expérience gourmande, en livraison ou à emporter.",
+  "icons": [
+    {
+      "src": "/assets/logo.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/logo.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#F59E0B"
+}

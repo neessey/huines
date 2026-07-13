@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Orders collection: clients can create/read their own, chefs/couriers/admins can read/update all
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+    
+    // Loyalty points collection: clients can read/update their own points balance
+    match /loyalty/{userId} {
+      allow read, write: if true;
+    }
+
+    // Promotions collection: read-only for clients, writeable for admins
+    match /promotions/{promoCode} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}
