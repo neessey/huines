@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Product, Order } from './types';
 
@@ -21,14 +21,25 @@ import { MapPin, Phone, Mail, Clock, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 function AppContent() {
-  const { role, triggerSound } = useApp();
-
+const { role, triggerSound, switchRole } = useApp();
   // Customer UI states
   const [activeCustomizerProduct, setActiveCustomizerProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [activeTrackingOrder, setActiveTrackingOrder] = useState<Order | null>(null);
+const pressTimer = useRef<number | undefined>(undefined);
 
+const startSecretPress = () => {
+  pressTimer.current = window.setTimeout(() => {
+    switchRole("management");
+  }, 5000);
+};
+
+const cancelSecretPress = () => {
+  if (pressTimer.current) {
+    clearTimeout(pressTimer.current);
+  }
+};
   const handleOrderPlaced = (placedOrder: Order) => {
     setIsCheckoutOpen(false);
     setIsCartOpen(false);
@@ -90,7 +101,11 @@ function AppContent() {
                 {/* Brand description */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-amber-500 rounded-lg flex items-center justify-center font-display font-extrabold text-white text-base">
+                    <div className="w-9 h-9 bg-amber-500 rounded-lg flex items-center justify-center font-display font-extrabold text-white text-base"  onMouseDown={startSecretPress}
+  onMouseUp={cancelSecretPress}
+  onMouseLeave={cancelSecretPress}
+  onTouchStart={startSecretPress}
+  onTouchEnd={cancelSecretPress}>
                                 <img src="/assets/logo.jpeg" alt="Huinest Food" className="w-11 h-11 rounded-xl shadow-lg shadow-bros-red/20 object-cover" />
 
                     </div>
