@@ -146,7 +146,7 @@ const INITIAL_ORDERS: Order[] = [
     items: [
       {
         id: 'init-1',
-        product: PRODUCTS[0], // Margherita Authentique
+        product: PRODUCTS[1], // Margherita Authentique
         quantity: 2,
         customization: {
           pate: 'Classique',
@@ -157,12 +157,7 @@ const INITIAL_ORDERS: Order[] = [
         },
         finalPrice: 5000
       },
-      {
-        id: 'init-2',
-        product: PRODUCTS[10], // Jus de Bissap
-        quantity: 2,
-        finalPrice: 1500
-      }
+      
     ],
     total: 13000,
     status: 'preparing',
@@ -175,26 +170,6 @@ const INITIAL_ORDERS: Order[] = [
     timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
     deliveryTimeEst: 15
   },
-  {
-    id: '102',
-    items: [
-      {
-        id: 'init-3',
-        product: PRODUCTS[7], // L'Alloco Pizza
-        quantity: 1,
-        finalPrice: 6900
-      }
-    ],
-    total: 6900,
-    status: 'received',
-    paymentMethod: 'orange_money',
-    phone: '05 55 66 77 88',
-    address: 'Plateau, Boulevard de la République, Imm. Alpha',
-    clientName: 'Fatoumata Diallo',
-    pointsEarned: 69,
-    timestamp: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-    deliveryTimeEst: 25
-  }
 ];
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -213,7 +188,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     orderCount: 2,
     topProducts: [
       { name: PRODUCTS[0].name, salesCount: 2, image: PRODUCTS[0].image, revenue: 9000 },
-      { name: PRODUCTS[7].name, salesCount: 1, image: PRODUCTS[7].image, revenue: 6900 }
+      { name: PRODUCTS[3].name, salesCount: 1, image: PRODUCTS[3].image, revenue: 6900 }
     ],
     hourlyRevenue: [
       { hour: '11:00', amount: 6900, count: 1 },
@@ -311,22 +286,29 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     const productSalesCount: Record<string, { count: number; image: string; price: number; name: string }> = {};
 
-    orders.forEach(order => {
-      order.items.forEach(item => {
-        const cat = item.product.category;
-        categoryTotals[cat] = (categoryTotals[cat] || 0) + (item.finalPrice * item.quantity);
-        
-        if (!productSalesCount[item.product.id]) {
-          productSalesCount[item.product.id] = {
-            count: 0,
-            image: item.product.image,
-            price: item.product.price,
-            name: item.product.name
-          };
-        }
-        productSalesCount[item.product.id].count += item.quantity;
-      });
-    });
+   orders.forEach(order => {
+  order.items.forEach(item => {
+    if (!item.product) {
+      console.warn("Produit manquant dans la commande :", order.id, item);
+      return;
+    }
+
+    const cat = item.product.category ?? "Autres";
+
+    categoryTotals[cat] = (categoryTotals[cat] || 0) + (item.finalPrice * item.quantity);
+
+    if (!productSalesCount[item.product.id]) {
+      productSalesCount[item.product.id] = {
+        count: 0,
+        image: item.product.image || "",
+        price: item.product.price || 0,
+        name: item.product.name || "Produit"
+      };
+    }
+
+    productSalesCount[item.product.id].count += item.quantity;
+  });
+});
 
     const topProducts = Object.values(productSalesCount)
       .map(item => ({
